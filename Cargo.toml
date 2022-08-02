@@ -144,4 +144,3 @@ required-features = ["cli"]
 
 [[bin]]
 name = "simple"
-required-features = ["cli"]
