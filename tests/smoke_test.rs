@@ -122,6 +122,8 @@ integration_test!(test_yaml, "test-yaml");
 integration_test!(test_urlquery, "test-urlquery");
 integration_test!(test_time, "test-time");
 
+integration_test!(test_regex, "test-regex");
+
 /*
 #[tokio::test]
 async fn test_uuid() {
