@@ -49,12 +49,10 @@ chrono = { version = "0.4.31", optional = true, default-features = false, featur
 chrono-tz = { version = ">=0.6, <0.9.0", optional = true }
 chronoutil = { version = "0.2", optional = true }
 duration-str = { version = "0.7", optional = true, default-features = false }
+globset = { version = "0.4.9", optional = true }
 regex = { version = "1.7.0", optional = true }
 route-pattern = { version = "0.1.0", optional = true }
 regex-intersect = { version = "1.2.0", optional = true }
-form_urlencoded = { version = "1.1.0", optional = true }
-urlencoding = { version = "2.1.2", optional = true }
-globset = { version = "*", optional = true }
 
 [dev-dependencies.tokio]
 version = "1.5"
@@ -106,7 +104,6 @@ json-builtins = ["dep:json-patch"]
 units-builtins = ["dep:parse-size"]
 rand-builtins = ["rng"]
 yaml-builtins = ["dep:serde_yaml"]
-urlquery-builtins = ["dep:form_urlencoded", "dep:urlencoding"]
 time-builtins = ["time", "dep:chrono-tz", "dep:duration-str", "dep:chronoutil"]
 regex-builtins = ["dep:regex", "dep:route-pattern", "dep:regex-intersect"]
 urlquery-builtins = ["dep:form_urlencoded", "dep:urlencoding"]
