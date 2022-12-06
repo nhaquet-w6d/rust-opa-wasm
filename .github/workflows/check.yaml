@@ -202,4 +202,3 @@ jobs:
     steps:
       - uses: matrix-org/done-action@v2
         with:
-          needs: ${{ toJSON(needs) }}
