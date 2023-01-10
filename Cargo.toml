@@ -25,9 +25,7 @@ futures-util = { version = "0.3", optional = true }
 camino = { version = "1", optional = true }
 clap = { version = "4", features = ["derive"], optional = true }
 tracing-forest = { version = "0.1.4", optional = true }
-tracing-subscriber = { version = "0.3", features = [
-  "env-filter",
-], optional = true }
+tracing-subscriber = { version = "0.3", features = ["env-filter"], optional = true }
 
 # Builtins
 base64 = { version = "0.21", optional = true }
@@ -146,4 +144,3 @@ required-features = ["cli"]
 
 [[bin]]
 name = "simple"
-required-features = ["cli"]
