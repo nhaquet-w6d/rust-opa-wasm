@@ -104,10 +104,11 @@ json-builtins = ["dep:json-patch"]
 units-builtins = ["dep:parse-size"]
 rand-builtins = ["rng"]
 yaml-builtins = ["dep:serde_yaml"]
-time-builtins = ["time", "dep:chrono-tz", "dep:duration-str", "dep:chronoutil"]
 regex-builtins = ["dep:regex", "dep:route-pattern", "dep:regex-intersect"]
 urlquery-builtins = ["dep:form_urlencoded", "dep:urlencoding"]
 glob-builtins = ["dep:globset"]
+time-builtins = ["time", "dep:chrono-tz", "dep:duration-str", "dep:chronoutil"]
+object-builtins = []
 
 all-crypto-builtins = [
   "crypto-digest-builtins",
@@ -131,7 +132,8 @@ all-builtins = [
   "time-builtins",
   "regex-builtins",
   "urlquery-builtins",
-  "glob-builtins",
+  "time-builtins",
+  "object-builtins",
 ]
 
 [[test]]
