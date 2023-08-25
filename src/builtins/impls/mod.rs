@@ -22,7 +22,9 @@ use anyhow::{bail, Result};
 #[cfg(feature = "base64url-builtins")]
 pub mod base64url;
 pub mod crypto;
+#[cfg(feature = "glob-builtins")]
 pub mod glob;
+
 pub mod graph;
 pub mod graphql;
 #[cfg(feature = "hex-builtins")]
@@ -32,11 +34,14 @@ pub mod io;
 #[cfg(feature = "json-builtins")]
 pub mod json;
 pub mod net;
+#[cfg(feature = "object-builtins")]
 pub mod object;
 pub mod opa;
 #[cfg(feature = "rng")]
 pub mod rand;
+#[cfg(feature = "regex-builtins")]
 pub mod regex;
+
 pub mod rego;
 #[cfg(feature = "semver-builtins")]
 pub mod semver;
@@ -49,6 +54,8 @@ pub mod urlquery;
 pub mod uuid;
 #[cfg(feature = "yaml-builtins")]
 pub mod yaml;
+#[cfg(feature = "sprintf-builtins")]
+use sprintf::{vsprintf, Printf};
 
 /// Returns a list of all the indexes of a substring contained inside a string.
 #[tracing::instrument(err)]
@@ -60,7 +67,7 @@ pub fn indexof_n(string: String, search: String) -> Result<Vec<u32>> {
 /// Returns the given string, formatted.
 #[tracing::instrument(err)]
 pub fn sprintf(format: String, values: Vec<serde_json::Value>) -> Result<String> {
-    use sprintf::{vsprintf, Printf};
+    let orig_values = values.clone();
 
     let values: Result<Vec<Box<dyn Printf>>, _> = values
         .into_iter()
@@ -87,7 +94,26 @@ pub fn sprintf(format: String, values: Vec<serde_json::Value>) -> Result<String>
         .collect();
     let values = values?;
     let values: Vec<&dyn Printf> = values.iter().map(std::convert::AsRef::as_ref).collect();
-    vsprintf(&format, &values).map_err(|_| anyhow::anyhow!("failed to call printf"))
+
+    match vsprintf(&format, &values) {
+        Ok(str) => Ok(str),
+        Err(err) => handle_errors_like_go(err, format, orig_values),
+    }
+}
+
+#[cfg(feature = "sprintf-builtins")]
+fn handle_errors_like_go(
+    err: sprintf::PrintfError,
+    format: String,
+    values: Vec<serde_json::Value>,
+) -> Result<String> {
+    match err {
+        sprintf::PrintfError::ParseError
+        | sprintf::PrintfError::WrongType
+        | sprintf::PrintfError::TooManyArgs
+        | sprintf::PrintfError::NotEnoughArgs => Ok(format!("{format}, ({err:?}, {values:?})")),
+        sprintf::PrintfError::Unknown => anyhow::bail!("failed to call printf"),
+    }
 }
 
 /// Emits `note` as a `Note` event in the query explanation. Query explanations

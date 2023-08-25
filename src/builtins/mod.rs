@@ -66,7 +66,9 @@ pub fn resolve<C: EvaluationContext>(name: &str) -> Result<Box<dyn Builtin<C>>> 
         "crypto.x509.parse_rsa_private_key" => {
             Ok(self::impls::crypto::x509::parse_rsa_private_key.wrap())
         }
+        #[cfg(feature = "glob-builtins")]
         "glob.quote_meta" => Ok(self::impls::glob::quote_meta.wrap()),
+
         "graph.reachable_paths" => Ok(self::impls::graph::reachable_paths.wrap()),
         "graphql.is_valid" => Ok(self::impls::graphql::is_valid.wrap()),
         "graphql.parse" => Ok(self::impls::graphql::parse.wrap()),
@@ -106,16 +108,34 @@ pub fn resolve<C: EvaluationContext>(name: &str) -> Result<Box<dyn Builtin<C>>> 
         "net.cidr_expand" => Ok(self::impls::net::cidr_expand.wrap()),
         "net.cidr_merge" => Ok(self::impls::net::cidr_merge.wrap()),
         "net.lookup_ip_addr" => Ok(self::impls::net::lookup_ip_addr.wrap()),
+
+        #[cfg(feature = "object-builtins")]
         "object.union_n" => Ok(self::impls::object::union_n.wrap()),
+
         "opa.runtime" => Ok(self::impls::opa::runtime.wrap()),
 
         #[cfg(feature = "rng")]
         "rand.intn" => Ok(self::impls::rand::intn.wrap()),
 
+        #[cfg(feature = "regex-builtins")]
         "regex.find_n" => Ok(self::impls::regex::find_n.wrap()),
+        #[cfg(feature = "regex-builtins")]
         "regex.globs_match" => Ok(self::impls::regex::globs_match.wrap()),
+        #[cfg(feature = "regex-builtins")]
         "regex.split" => Ok(self::impls::regex::split.wrap()),
+        #[cfg(feature = "regex-builtins")]
         "regex.template_match" => Ok(self::impls::regex::template_match.wrap()),
+        #[cfg(feature = "regex-builtins")]
+        "regex.replace" => Ok(self::impls::regex::replace.wrap()),
+        #[cfg(feature = "regex-builtins")]
+        "regex.match" => Ok(self::impls::regex::regex_match.wrap()),
+        #[cfg(feature = "regex-builtins")]
+        "regex.is_valid" => Ok(self::impls::regex::is_valid.wrap()),
+        #[cfg(feature = "regex-builtins")]
+        "regex.find_all_string_submatch_n" => {
+            Ok(self::impls::regex::find_all_string_submatch_n.wrap())
+        }
+
         "rego.parse_module" => Ok(self::impls::rego::parse_module.wrap()),
 
         #[cfg(feature = "semver-builtins")]
