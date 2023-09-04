@@ -32,16 +32,16 @@ pub fn union_n(objects: Vec<Value>) -> Result<Value> {
 
 fn merge_value(a: &mut Value, b: &Value) {
     match (a, b) {
-        (Value::Object(ref mut a), &Value::Object(ref b)) => {
+        (Value::Object(ref mut a), Value::Object(b)) => {
             for (k, v) in b {
                 merge_value(a.entry(k).or_insert(Value::Null), v);
             }
         }
-        (Value::Array(ref mut a), &Value::Array(ref b)) => {
+        (Value::Array(ref mut a), Value::Array(b)) => {
             *a = vec![];
             a.extend(b.clone());
         }
-        (Value::Array(ref mut a), &Value::Object(ref b)) => {
+        (Value::Array(ref mut a), Value::Object(b)) => {
             *a = vec![];
             a.extend([Value::Object(b.clone())]);
         }
