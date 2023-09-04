@@ -45,7 +45,6 @@ pub fn split(pattern: String, value: String) -> Result<Vec<String>> {
     let re = Regex::new(&pattern)?;
     Ok(re
         .split(&value)
-        .into_iter()
         .map(ToString::to_string)
         .collect::<Vec<_>>())
 }
