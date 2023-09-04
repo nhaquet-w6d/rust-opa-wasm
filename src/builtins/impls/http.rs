@@ -14,11 +14,12 @@
 
 //! Builtins used to make HTTP request
 
-use std::{collections::HashMap, time::Duration};
+use std::{collections::HashMap, sync::Arc, time::Duration};
 
 use anyhow::{bail, Result};
 use duration_str::deserialize_duration;
-use http_cache_reqwest::{Cache, CacheMode, HttpCache, HttpCacheOptions, MokaManager};
+use http_cache_reqwest::{Cache, CacheMode, HttpCache, HttpCacheOptions, MokaCache, MokaManager};
+use once_cell::sync::Lazy;
 use reqwest::{header::HeaderMap, redirect::Policy, Client, Method};
 use reqwest_middleware::{ClientBuilder, ClientWithMiddleware, RequestBuilder};
 use reqwest_retry::{policies::ExponentialBackoff, RetryTransientMiddleware};
@@ -82,6 +83,9 @@ pub struct Response {
     headers: HeaderMap,
     error: HashMap<String, u16>,
 }
+
+static CACHE: Lazy<MokaCache<String, Arc<Vec<u8>>>> =
+    Lazy::new(|| MokaCache::builder().max_capacity(42).build());
 
 fn unimplemented_option(data: &Request) -> Result<()> {
     if let Some(_op) = data.raise_error {
@@ -163,7 +167,7 @@ fn build_client(data: &Request) -> Result<ClientWithMiddleware> {
 
         client_builder = client_builder.with(Cache(HttpCache {
             mode,
-            manager: MokaManager::default(),
+            manager: MokaManager::new(CACHE.clone()),
             options: HttpCacheOptions::default(),
         }));
     }
