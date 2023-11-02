@@ -126,6 +126,12 @@ integration_test!(test_urlquery, "test-urlquery");
 integration_test!(test_time, "test-time");
 integration_test!(test_object, "test-object");
 
+integration_test!(test_regex, "test-regex");
+integration_test!(test_http, "test-http");
+integration_test!(test_object, "test-object");
+
+integration_test!(test_glob, "test-glob");
+
 /*
 #[tokio::test]
 async fn test_uuid() {

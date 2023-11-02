@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install toolchain
         run: |
@@ -39,12 +39,12 @@ jobs:
 
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install toolchain
         run: |
-          rustup toolchain install 1.68.2
-          rustup default 1.68.2
+          rustup toolchain install 1.72.0
+          rustup default 1.72.0
           rustup component add clippy
       - name: Setup Rust cache
         uses: Swatinem/rust-cache@v2
@@ -81,7 +81,7 @@ jobs:
 
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install toolchain
         run: |
@@ -112,12 +112,12 @@ jobs:
 
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install toolchain
         run: |
-          rustup toolchain install 1.66.0 # MSRV
-          rustup default 1.66.0 # MSRV
+          rustup toolchain install 1.70.0 # MSRV
+          rustup default 1.70.0 # MSRV
 
       - name: Setup Rust cache
         uses: Swatinem/rust-cache@v2
@@ -150,7 +150,7 @@ jobs:
 
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install toolchain
         run: |
