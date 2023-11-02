@@ -90,7 +90,7 @@ pub fn diff(ns1: serde_json::Value, ns2: serde_json::Value) -> Result<(u8, u8, u
 /// Returns the current time since epoch in nanoseconds.
 #[tracing::instrument(name = "time.now_ns", skip(ctx))]
 pub fn now_ns<C: EvaluationContext>(ctx: &mut C) -> i64 {
-    ctx.now().timestamp_nanos()
+    ctx.now().timestamp_nanos_opt().unwrap()
 }
 
 /// Returns the duration in nanoseconds represented by a string.

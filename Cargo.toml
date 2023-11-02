@@ -14,7 +14,7 @@ serde_json = "1.0.18" # This is the earliest version which supports 128-bit inte
 thiserror = "1"
 tokio = { version = "1.5", features = ["sync", "macros"] }
 tracing = "0.1.27"
-wasmtime = { version = ">=8, <15", default-features = false, features = ["async"] }
+wasmtime = { version = "14", default-features = false, features = ["async"] }
 
 # Loader
 tokio-tar = { version = "0.3", optional = true }
@@ -63,7 +63,7 @@ version = "1.5"
 features = ["macros", "fs", "rt", "rt-multi-thread"]
 
 [dev-dependencies]
-wasmtime = { version = ">=8, <15", default-features = false, features = ["cranelift", "memory-init-cow"]}
+wasmtime = { version = "14", default-features = false, features = ["cranelift"]}
 insta = { version = "1", features = ["yaml"] }
 
 [build-dependencies]
@@ -97,7 +97,6 @@ glob-builtins = ["dep:globset"]
 http-builtins = ["dep:reqwest", "dep:reqwest-retry", "dep:reqwest-middleware", "dep:http-serde", "dep:http-cache-reqwest", "dep:once_cell"]
 regex-builtins = ["dep:regex", "dep:route-pattern", "dep:regex-intersect"]
 urlquery-builtins = ["dep:form_urlencoded", "dep:urlencoding"]
-glob-builtins = ["dep:globset"]
 time-builtins = ["time", "dep:chrono-tz", "dep:duration-str", "dep:chronoutil"]
 object-builtins = []
 
